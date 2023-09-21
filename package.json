@@ -1,0 +1,32 @@
+{
+  "name": "lutpatcher",
+  "version": "0.1.0",
+  "description": "File Patcher for SWF and GFX files",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "exports": [
+    "./lib/**/*.js",
+    "./patches/**/*.js"
+  ],
+  "files": [
+    "./patches/**/*.js",
+    "./lib/**/*.js",
+    "./cli/**.*.js"
+  ],
+  "author": "Carlos Lopez Jr. <clshortfuse@gmail.com> (https://github.com/clshortfuse/)",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^20.5.9",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
+    "eslint": "^8.45.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsdoc": "^46.4.0",
+    "eslint-plugin-sort-class-members": "^1.15.2",
+    "eslint-plugin-unicorn": "^48.0.0",
+    "swf-types": "^0.14.0"
+  }
+}

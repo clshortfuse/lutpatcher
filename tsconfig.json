@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "checkJs": true,
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "types",
+    "module": "esnext",
+    "moduleResolution": "NodeNext",
+    "noErrorTruncation": true,
+    "noImplicitAny": true,
+    "outDir": "/dev/null",
+    "resolveJsonModule": true,
+    "strict": false,
+    "target": "esnext"
+  },
+  "include": [
+    "./**/*.js"
+  ],
+  "exclude": [
+    "./**/*.min.js",
+    "./node_modules/*",
+    ".history/*",
+    "types/*"
+  ]
+}
