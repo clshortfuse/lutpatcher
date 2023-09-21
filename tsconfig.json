@@ -6,7 +6,7 @@
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "types",
-    "module": "esnext",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "noErrorTruncation": true,
     "noImplicitAny": true,
@@ -16,7 +16,8 @@
     "target": "esnext"
   },
   "include": [
-    "./**/*.js"
+    "./**/*.js",
+    "./**/*.html"
   ],
   "exclude": [
     "./**/*.min.js",

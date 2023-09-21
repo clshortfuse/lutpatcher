@@ -29,13 +29,15 @@
     },
     "ecmaVersion": 2020,
     "project": true,
-    "sourceType": "module"
+    "sourceType": "module",
+    "extraFileExtensions": [".html"]
   },
   "plugins": [
     "@typescript-eslint",
     "jsdoc",
     "unicorn",
-    "sort-class-members"
+    "sort-class-members",
+    "html"
   ],
   "root": true,
   "rules": {

@@ -1,0 +1,4 @@
+{
+  "js/ts.implicitProjectConfig.checkJs": true,
+  "eslint.validate": [ "javascript", "html" ]
+}

@@ -4,7 +4,7 @@ import * as path from 'node:path';
 import { stderr } from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-import { runPatches } from '../lib/patcher.js';
+import { runPatches } from '../lib/nodePatcher.js';
 import { getSearchParams } from '../utils/cli.js';
 import { waitForTask } from '../utils/tasks.js';
 
@@ -82,5 +82,3 @@ async function main() {
 }
 
 await main();
-
-

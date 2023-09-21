@@ -6,18 +6,24 @@
  * @param {number} newMax
  */
 export function linearNormalization(input, min, max, newMin = min, newMax = max) {
-  return (input - min) * ((newMax - newMin) / (max - min)) + newMin;
+  return (input - min)
+    * ((newMax - newMin)
+        / (max - min))
+    + newMin;
 }
 
 /**
+ * Used to upscale a range of values to a new range while keeping
+ * values somewhat in the same place (eg: unclamping values)
  * @param {number} input
  * @param {number} min
  * @param {number} max
  * @param {number} newMin
  * @param {number} newMax
  * @param {number} average (based on input)
+ * @param {number} deviation
  */
-export function biasedScaling(input, min, max, newMin, newMax, average) {
+export function biasedScaling(input, min, max, newMin, newMax, average, deviation = 0) {
   if (min === newMin && max === newMax) {
     return input;
   }
@@ -25,17 +31,20 @@ export function biasedScaling(input, min, max, newMin, newMax, average) {
 
   if (input === average) return average;
 
+  if (average < newMin || average > newMax) {
+    throw new Error(`Downscale range: [${newMin}, ${newMax}]`);
+  }
+
+  if (deviation) {
+    const buffer = deviation * (max - min);
+    if (input > average && input < (average + buffer)) return input;
+    if (input < average && input > (average - buffer)) return input;
+  }
+
   if (input < average) {
-    if (average < newMin) {
-      // Downscaling...
-      throw new Error(`Invalid min: ${newMin}`);
-    }
     return linearNormalization(input, min, average, newMin, average);
   }
-  if (average > newMax) {
-    // Downscaling...
-    throw new Error(`Invalid max: ${newMax}`);
-  }
+
   return linearNormalization(input, average, max, average, newMax);
 }
 

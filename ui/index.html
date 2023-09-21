@@ -1,0 +1,36 @@
+<head>
+  <title>LUT Patcher</title>
+  <script type=module src="https://rawcdn.githack.com/clshortfuse/materialdesignweb/7845b420/index.js"></script>
+  <style>
+    html,body,mdw-page {
+      height: 100%;
+      margin:0;
+    }
+    #surface {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <mdw-root>
+    <mdw-page>
+      <mdw-pane>
+        <mdw-box flex-0 row x=stretch y=center gap=16 padding=16>
+          <mdw-input flex-1 id=source outlined disabled ink=secondary label="Source File" type=select-one>
+            <mdw-listbox id=source-list>
+            </mdw-listbox>
+          </mdw-input>
+          <mdw-icon-button id=input-picker filled icon=folder_open>Select folder...</mdw-icon-button>
+        </mdw-box>
+        <mdw-divider primary></mdw-divider>
+        <mdw-box flex-1>
+          <canvas id="surface"></canvas>
+        </mdw-box>
+      </mdw-pane>
+    </mdw-page>
+
+  </mdw-root>
+  <script type=module src="./main.js"></script>
+</body>

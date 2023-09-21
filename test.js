@@ -34,7 +34,7 @@ function computeAverage(array) {
 console.log('raw', values, computeAverage(values));
 
 const mapped = values
-  .map((value) => biasedScaling(value, min, max, 0, 255, computeAverage(values)));
+  .map((value) => biasedScaling(value, min, max, 0, 255, computeAverage(values), 0.125));
 
 console.log('biased', mapped, computeAverage(mapped));
 

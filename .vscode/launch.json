@@ -5,9 +5,15 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug Web App",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://127.0.0.1:5500/ui/index.html",
+    },
+    {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Debug Node Patcher",
       "skipFiles": [
         "<node_internals>/**"
       ],
@@ -17,6 +23,6 @@
         "--out=./out",
         "--xml"
       ]
-    }
+    },
   ]
 }
