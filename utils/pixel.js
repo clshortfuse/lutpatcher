@@ -1,7 +1,7 @@
 /**
  * @param {Uint8Array} array
  * @param {number} offset
- * @return {[number,number,number,number]}
+ * @return {Uint8Array|[number,number,number,number]}
  */
 export function readRGBAFromBytes(array, offset = 0) {
   return array.subarray(offset, offset + 4);

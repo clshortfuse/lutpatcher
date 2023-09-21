@@ -1,5 +1,5 @@
 import { linearRGBFromSRGB } from './color.js';
-import { readRGBAFromBytes, writeRGBABytes } from './pixel.js';
+import { readRGBAFromBytes } from './pixel.js';
 
 /**
  * @param {ReturnType<import('./dds.js').parseDDS>} dds
@@ -21,7 +21,7 @@ function parseLUTColorFromDDS(dds, x, y, z) {
 }
 
 /**
- * @param {[number,number,number,number?]} bytes
+ * @param {Uint8Array|[number,number,number,number?]} bytes
  * @return {[number,number,number]}
  */
 function linearRGBFromBytes(bytes) {
@@ -33,32 +33,10 @@ function linearRGBFromBytes(bytes) {
 }
 
 /**
- * @param {number} x1
- * @param {number} y1
- * @param {number} z1
- * @param {number} x2
- * @param {number} y2
- * @param {number} z2
- */
-function distance3d(x1, y1, z1, x2, y2, z2) {
-  return Math.hypot(
-    x2 - x1,
-    y2 - y1,
-    z2 - z1,
-  );
-}
-
-/**
  * @param {ReturnType<import('./dds.js').parseDDS>} dds
  */
 export function parseLUT(dds) {
   const black = linearRGBFromBytes(parseLUTColorFromDDS(dds, 0, 0, 0));
-  const red = linearRGBFromBytes(parseLUTColorFromDDS(dds, 1, 0, 0));
-  const green = linearRGBFromBytes(parseLUTColorFromDDS(dds, 0, 1, 0));
-  const blue = linearRGBFromBytes(parseLUTColorFromDDS(dds, 0, 0, 1));
-  const cyan = linearRGBFromBytes(parseLUTColorFromDDS(dds, 0, 1, 1));
-  const magenta = linearRGBFromBytes(parseLUTColorFromDDS(dds, 1, 0, 1));
-  const yellow = linearRGBFromBytes(parseLUTColorFromDDS(dds, 1, 1, 0));
   const white = linearRGBFromBytes(parseLUTColorFromDDS(dds, 1, 1, 1));
 
   const squares = dds.header.width / dds.header.height;
@@ -71,49 +49,17 @@ export function parseLUT(dds) {
         const relativeZ = z / (squares - 1);
         const raw = parseLUTColorFromDDS(dds, relativeX, relativeY, relativeZ);
         const linear = linearRGBFromBytes(raw);
+
         points.push({
           x: relativeX,
           y: relativeY,
           z: relativeZ,
           raw,
           linear,
-          blackDistance: distance3d(relativeX, relativeY, relativeZ, 0, 0, 0),
-          redDistance: distance3d(relativeX, relativeY, relativeZ, 1, 0, 0),
-          greenDistance: distance3d(relativeX, relativeY, relativeZ, 0, 1, 0),
-          blueDistance: distance3d(relativeX, relativeY, relativeZ, 0, 0, 1),
-          cyanDistance: distance3d(relativeX, relativeY, relativeZ, 0, 1, 1),
-          magentaDistance: distance3d(relativeX, relativeY, relativeZ, 1, 0, 1),
-          yellowDistance: distance3d(relativeX, relativeY, relativeZ, 1, 1, 0),
-          whiteDistance: distance3d(relativeX, relativeY, relativeZ, 1, 1, 1),
         });
       }
     }
   }
 
-  return { black, white, red, green, blue, cyan, magenta, yellow, points };
-  // const totalPixels = dds.surface.length / dds.bytesPerPixel;
-  // const totalSquares = 16;
-  // const squareSize = dds.header.height;
-  // const squares = [];
-  // for (let square = 0; square < totalSquares; square++) {
-  //   const data = new Uint8Array(squareSize * squareSize * dds.bytesPerPixel);
-
-  //   for (let row = 0; row < squareSize; row++) {
-  //     const rowStart = (dds.header.width) * row;
-  //     for (let column = 0; column < squareSize; column++) {
-  //       const columnOffset = square * squareSize;
-  //       const pixelPosition = rowStart + columnOffset + column;
-  //       const offset = pixelPosition * dds.bytesPerPixel;
-  //       // R8 G8 B8
-  //       const slicedOffset = (row * squareSize + column) * dds.bytesPerPixel;
-  //       writeRGBABytes(data, slicedOffset, ...readRGBAFromBytes(dds.surface, offset));
-  //     }
-  //   }
-  //   squares.push(data);
-  //   console.log(data);
-  // }
-
-  // const black = readRGBAFromBytes(squares[0], 0);
-  // const peakRed = readRGBAFromBytes(squares[0], 15);
-  // const peakGreen = readRGBAFromBytes(squares[0]);
+  return { black, white, points };
 }
