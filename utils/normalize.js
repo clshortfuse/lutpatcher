@@ -6,10 +6,11 @@
  * @param {number} newMax
  */
 export function linearNormalization(input, min, max, newMin = min, newMax = max) {
-  return (input - min)
-    * ((newMax - newMin)
-        / (max - min))
-    + newMin;
+  return newMin
+    + (
+      ((input - min) * (newMax - newMin))
+        / (max - min)
+    );
 }
 
 /**
