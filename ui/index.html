@@ -1,14 +1,28 @@
 <head>
   <title>LUT Patcher</title>
-  <script type=module src="https://rawcdn.githack.com/clshortfuse/materialdesignweb/7845b420/index.js"></script>
+  <script type=module src="https://rawcdn.githack.com/clshortfuse/materialdesignweb/e175b355/index.js"></script>
   <style>
-    html,body,mdw-page {
+    html,
+    body,
+    mdw-page {
       height: 100%;
-      margin:0;
+      margin: 0;
     }
-    #surface {
-      width: 100%;
+
+    canvas {
+      width: auto;
       height: 100%;
+      image-rendering: pixelated;
+    }
+
+    .circle {
+      vertical-align: sub;
+      display: inline-block;
+      width: 1lh;
+      height: 1lh;
+      box-sizing: border-box;
+      border-radius: 50%;
+      border: 1px solid hsl(0, 0%, 50%);
     }
   </style>
 </head>
@@ -24,9 +38,36 @@
           </mdw-input>
           <mdw-icon-button id=input-picker filled icon=folder_open>Select folder...</mdw-icon-button>
         </mdw-box>
-        <mdw-divider primary></mdw-divider>
-        <mdw-box flex-1>
-          <canvas id="surface"></canvas>
+        <mdw-divider></mdw-divider>
+        <mdw-box flex-0 padding=16 gap=8>
+          <div>
+            <mdw-label inline ink=primary>Black:</mdw-label>
+            <span id=black></span>
+            <span class=circle id=black-circle></span>
+          </div>
+          <div>
+            <mdw-label inline ink=primary>White:</mdw-label>
+            <span id=white></span>
+            <span class=circle id=white-circle></span>
+          </div>
+          <div>
+            <mdw-label inline ink=primary>Min:</mdw-label>
+            <span id=min></span>
+          </div>
+          <div>
+            <mdw-label inline ink=primary>Max:</mdw-label>
+            <span id=max></span>
+          </div>
+          <div>
+            <mdw-label inline ink=primary>Tint:</mdw-label>
+            <span id=tint></span>
+            <span class=circle id=tint-circle></span>
+          </div>
+        </mdw-box>
+        <mdw-divider></mdw-divider>
+        <mdw-box flex-1 id=scene-container row x=center y=stretch padding=16 gap=16>
+          <canvas id=surface-before flex=1></canvas>
+          <canvas id=surface-after flex=1></canvas>
         </mdw-box>
       </mdw-pane>
     </mdw-page>

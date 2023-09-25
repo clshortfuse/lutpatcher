@@ -41,9 +41,10 @@ export function parseLUT(dds) {
 
   const squares = dds.header.width / dds.header.height;
   const points = [];
+
   for (let z = 0; z < squares; z++) {
-    for (let x = 0; x < squares; x++) {
-      for (let y = 0; y < squares; y++) {
+    for (let y = 0; y < squares; y++) {
+      for (let x = 0; x < squares; x++) {
         const relativeX = x / (squares - 1);
         const relativeY = y / (squares - 1);
         const relativeZ = z / (squares - 1);
@@ -60,6 +61,21 @@ export function parseLUT(dds) {
       }
     }
   }
+  /**
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   */
+  function at(x, y, z) {
+    const max = squares - 1;
 
-  return { black, white, points };
+    const roundedX = Math.round(x * max);
+    const roundedY = Math.round(y * max);
+    const roundedZ = Math.round(z * max);
+
+    const offset = (roundedZ * squares * squares) + (roundedY * squares) + roundedX;
+    return points[offset];
+  }
+
+  return { black, white, points, at };
 }
