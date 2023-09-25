@@ -324,3 +324,11 @@ export function retargetYFromGrayscale(red, green, blue, yTarget) {
   }
   return [newRed, newGreen, newBlue];
 }
+
+/**
+ * Round and clamps [0-1] value to [0-255]
+ * @param {number} channel
+ */
+export function channelAsRGB8(channel) {
+  return Math.max(0, Math.min(Math.round(channel * 255), 255));
+}

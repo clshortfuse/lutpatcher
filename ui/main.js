@@ -1,4 +1,4 @@
-import { getLevels, patchDDS } from '../lib/patcher.js';
+import { analyzeLUT, getLevels, patchDDS } from '../lib/patcher.js';
 import { sRGBFromLinearRGB } from '../utils/color.js';
 import { parseDDS } from '../utils/dds.js';
 import { parseLUT } from '../utils/lut.js';
@@ -185,21 +185,20 @@ async function selectFile(filename) {
   refs.min.textContent = Math.round(levels.minChannel * 255);
   refs.max.textContent = Math.round(levels.maxChannel * 255);
 
-  const tint = asRGB8FromLinear([
-    levels.averageRed,
-    levels.averageGreen,
-    levels.averageBlue,
-  ]);
-  refs.tint.textContent = tint;
-  refs.tintCircle.style.backgroundColor = tint;
-
   renderLut(lut, refs.surfaceBefore);
 
   const patched = parseDDS(array.slice());
 
   const changes = patchDDS(patched);
+
+  const patchedLut = parseLUT(patched);
+  const average = analyzeLUT(patchedLut);
+  const tint = asRGB8FromLinear(average);
+  refs.tint.textContent = tint;
+  refs.tintCircle.style.backgroundColor = tint;
+
   console.log({ changes });
-  renderLut(parseLUT(patched), refs.surfaceAfter);
+  renderLut(patchedLut, refs.surfaceAfter);
 }
 
 /**

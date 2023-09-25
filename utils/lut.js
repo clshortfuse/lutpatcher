@@ -40,6 +40,15 @@ export function parseLUT(dds) {
   const white = linearRGBFromBytes(parseLUTColorFromDDS(dds, 1, 1, 1));
 
   const squares = dds.header.width / dds.header.height;
+  /**
+   * @typedef {Object} LutPoint
+   * @prop {number} x
+   * @prop {number} y
+   * @prop {number} z
+   * @prop {Uint8Array|[number,number,number,number?]} raw
+   * @prop {[number,number,number]} linear
+   */
+  /** @type {LutPoint[]} */
   const points = [];
 
   for (let z = 0; z < squares; z++) {
@@ -65,6 +74,7 @@ export function parseLUT(dds) {
    * @param {number} x
    * @param {number} y
    * @param {number} z
+   * @return {LutPoint}
    */
   function at(x, y, z) {
     const max = squares - 1;
@@ -77,5 +87,5 @@ export function parseLUT(dds) {
     return points[offset];
   }
 
-  return { black, white, points, at };
+  return { black, white, points, at, squares };
 }
