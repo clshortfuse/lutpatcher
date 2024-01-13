@@ -176,10 +176,11 @@ export function parseDDS(uint8Array) {
   } : null;
 
   const bytesLeft = uint8Array.length - consumer.byteOffset;
-  const bytesPerPixel = bytesLeft / (header.width * header.height);
+  const pixels = (header.width * header.height * (header.depth || 1));
+  const bytesPerPixel = bytesLeft / pixels;
 
   const surface = consumer.readBytes(bytesLeft);
   const extraSurfaces = consumer.readBytes(uint8Array.length - consumer.byteOffset);
 
-  return { signature, header, header10, surface, extraSurfaces, bytesPerPixel };
+  return { signature, header, header10, surface, extraSurfaces, bytesPerPixel, pixels };
 }
